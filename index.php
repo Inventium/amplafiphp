@@ -1,5 +1,11 @@
 <?php
 
+if (file_exists('firephp/lib/FirePHP/fb.php')) {
+  require_once('firephp/lib/FirePHPCore/FirePHP.class.php'); // (object oriented API)
+
+  echo "firephp";
+}
+
 ?>
 
 <h1>Test code for Amplafi PHP client</h1>
@@ -22,6 +28,10 @@ if (!$fp) {
     }
     fclose($fp);
 }
+
+
+FB::log('Log message');
+
 
 $ap_client = new AmplafiClient();
 
