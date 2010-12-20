@@ -1,5 +1,9 @@
 <?php
 
+if (file_exists('firephp/lib/FirePHP/fb.php')) {
+  require_once('firephp/lib/FirePHPCore/FirePHP.class.php'); // (object oriented API)
+}
+
 /**
  * Use http://www.firephp.org/ to help debug
  */
