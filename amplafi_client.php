@@ -7,24 +7,22 @@ if (file_exists('firephp/lib/FirePHP/fb.php')) {
 /**
  * Use http://www.firephp.org/ to help debug
  */
-class api_client {
+class AmplafiApiClient {
     var $amplafi_uri = 'http://amplafi.net/';
-    var $partnerGUID;
-    var $userCode;
+    var $content_type = 'application/json; charset=utf-8';
+    var $version = '0.1';
+    var $user_agent = 'AmplafiPhpClient/'. $version;
     var $admin = 0;
-    var $version = '1.0';
 
     var $request = null;
     var $response = null;
-    var $request_xml = '';
-    var $response_xml = '';
 
     var $requests = array();
     var $responses = array();
 
     var $errors = array();
 
-    function api_client( $partnerGUID = '', $userCode = null ) {
+    function AmplafiApiClient( ) {
         $this->partnerGUID = $partnerGUID;
         $this->userCode = $userCode;
     }
@@ -33,11 +31,10 @@ class api_client {
         $this->request_xml  = "";
 
         if ( function_exists( 'wp_remote_post' ) ) {
-            $response = wp_remote_post( $this->polldaddy_url, array(
-                'headers' => array( 'Content-Type' => 'text/xml; charset=utf-8', 'Content-Length' => strlen( $this-
->request_xml ) ),
-                'user-agent' => 'PollDaddy PHP Client/0.1',
-                'body' => $this->request_xml
+            $response = wp_remote_post( $this->amplafi_uri, array(
+                'headers' => array( 'Content-Type' => $this->content_type, 'Content-Length' => strlen( $this->request ) ),
+                'user-agent' => $this->version,
+                'body' => $this->request
             ) );
             if ( !$response || is_wp_error( $response ) ) {
                 $errors[-1] = "Can't connect";
@@ -54,11 +51,10 @@ class api_client {
 
             $fp = fsockopen(
                 $parsed['host'],
-                $parsed['scheme'] == 'ssl' || $parsed['scheme'] == 'https' && extension_loaded('openssl') ? 443 : 8
-0,
+                $parsed['scheme'] == 'ssl' || $parsed['scheme'] == 'https' && extension_loaded('openssl') ? 443 : 80,
                 $err_num,
                 $err_str,
-                3            );
+                3);
 
             if ( !$fp ) {
                 $errors[-1] = "Can't connect";
@@ -68,14 +64,13 @@ class api_client {
             if ( function_exists( 'stream_set_timeout' ) )
                 stream_set_timeout( $fp, 3 );
 
-            if ( !isset( $parsed['path']) || !$path = $parsed['path'] . ( isset($parsed['query']) ? '?' . $parsed['quer
-y'] : '' ) )
+            if ( !isset( $parsed['path']) || !$path = $parsed['path'] . ( isset($parsed['query']) ? '?' . $parsed['query'] : '' ) )
                 $path = '/';
 
             $request  = "POST $path HTTP/1.0\r\n";
             $request .= "Host: {$parsed['host']}\r\n";
-            $request .= "User-agent: PollDaddy PHP Client/0.1\r\n";
-            $request .= "Content-Type: text/xml; charset=utf-8\r\n";
+            $request .= "User-agent: ". $this->user_agent . "\r\n";
+            $request .= "Content-Type: ". $content_type . "\r\n";
             $request .= 'Content-Length: ' . strlen( $this->request_xml ) . "\r\n";
 
             fwrite( $fp, "$request\r\n$this->request_xml" );
