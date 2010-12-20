@@ -6,6 +6,9 @@ if (file_exists('firephp/lib/FirePHP/fb.php')) {
   echo "firephp";
 }
 
+require_once('basic_client.php');
+
+
 ?>
 
 <h1>Test code for Amplafi PHP client</h1>
@@ -18,7 +21,9 @@ $fp = fsockopen("amplafi.net", 80, $errno, $errstr, 30);
 
 if (!$fp) {
     echo "$errstr ($errno)<br />\n";
+    
 } else {
+  
     $out = "GET / HTTP/1.1\r\n";
     $out .= "Host: www.example.com\r\n";
     $out .= "Connection: Close\r\n\r\n";
@@ -26,14 +31,22 @@ if (!$fp) {
     while (!feof($fp)) {
         echo fgets($fp, 128);
     }
+    
+    echo "\nfoobar";
+
+$bc = new BasicClient();
+$bc->write_me();
+    
     fclose($fp);
+
+
 }
 
 
 FB::log('Log message');
 
-
-$ap_client = new AmplafiClient();
+$bc->write_me();
 
 ?>
 
+<p>Below Amplafi results...</p>
