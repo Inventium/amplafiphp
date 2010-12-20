@@ -22,5 +22,8 @@ if (!$fp) {
     }
     fclose($fp);
 }
+
+$ap_client = new AmplafiClient();
+
 ?>
 
