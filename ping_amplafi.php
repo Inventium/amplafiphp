@@ -1,11 +1,6 @@
-#/usr/bin/php
-
-#<?php
-#class api_client {
-     
-   
-$hostname = 'http://amplafi.net/apiv1/';
-
+#!/usr/bin/php
+<?php
+class api_client {
 /*
 $fp = fsockopen(
         $parsed['host'],
@@ -15,14 +10,17 @@ $fp = fsockopen(
         3
       );
 */
-$fp = fsockopen($hostame,80);
+function create() {
+    $hostname = 'amplafi.net';
+$fp = fsockopen($hostname,80);
 
 
       if ( !$fp ) {
         $errors[-1] = "Can't connect";
         return false;
       }
+}
+}
 
-
-#?>
+?>
 
