@@ -43,7 +43,9 @@ $ac->send_request('CreateAlert', array('messageBody' => 'a body', 'messageHeadli
 
 ?>
 
-//<script src="https://gist.github.com/737497.js?file=ruby_2d_array.rb"></script>
+<!--
+<script src="https://gist.github.com/737497.js?file=ruby_2d_array.rb"></script>
+-->
 
 <p>Below Amplafi results...</p>
 
