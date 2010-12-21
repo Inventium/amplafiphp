@@ -11,11 +11,11 @@
 In foo.php:
 
 ~~~~
-#!/usr/bin/php
-<?php
-.... blah ...
+    #!/usr/bin/php
+    <?php
+    .... blah ...
 
-?>
+    ?>
 ~~~~
 
 chmod u+x foo.php
