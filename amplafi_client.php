@@ -12,8 +12,9 @@ class AmplafiApiClient {
   
     var $amplafi_uri = 'http://amplafi.net/apiv1/';
     var $content_type = 'application/json; charset=utf-8';
+    var $flowTypeName;
     var $version = '0.1';
-    var $user_agent = 'AmplafiPhpClient/'. $version;
+    var $user_agent = 'AmplafiPhpClient/'. $this->version;
     var $admin = 0;
 
     var $request = null;
@@ -24,8 +25,8 @@ class AmplafiApiClient {
 
     var $errors = array();
 
-    function AmplafiApiClient() {
-       echo "From AmplafiApiClient...";
+    function AmplafiApiClient($flowTypeName) {
+        $this->flowTypeName = $flowTypeName;
     }
 
     
