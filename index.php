@@ -35,16 +35,13 @@ $ac->myecho("<p style=\"color:red;\">From PHPDevelop called from index.php.</p>"
 
 
 //$ac->dummy_api_request();
-$ac->send_request('CreateAlert', array('messageBody' => 'a body', 'messageHeadline' => 'a headline' ));
-
+//$ac->send_request('CreateAlert', array('fsRenderResult' => 'a body', 'messageHeadline' => 'a headline' ));
+echo $ac->describe('CreateAlert');
 
 // Not working, var out of scope probably.
 //$ac->myecho($ac->$amplafi_uri);
 
 ?>
-
-//<script src="https://gist.github.com/737497.js?file=ruby_2d_array.rb"></script>
-
 <p>Below Amplafi results...</p>
 
 <?php
