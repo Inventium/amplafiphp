@@ -30,7 +30,7 @@ include('fsockopen_test.php');
 
 $ac = new AmplafiApiClient();
 
-$ac->myecho("<p>foo</p>");
+$ac->myecho("<p style=\"color:red;\">From PHPDevelop called from index.php.</p>");
 
 ?>
 
