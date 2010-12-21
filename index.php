@@ -24,5 +24,7 @@ $bc->write_me();
 
 ?>
 
+<script src="https://gist.github.com/737497.js?file=ruby_2d_array.rb"></script>
+
 <p>Below Amplafi results...</p>
 
