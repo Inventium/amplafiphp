@@ -12,7 +12,8 @@ include('php_develop.php');
  */
 class AmplafiApiClient extends PHPDevelop {
   
-    var $amplafi_uri = 'http://amplafi.net/apiv1/';
+    var $default_amplafi_api_host = 'http://amplafi.net/';
+    var $amplafi_api_uri;
     var $content_type = 'application/json; charset=utf-8';
     var $version = '0.1';
     var $user_agent = 'AmplafiPhpClient/0.1'; //. $version;
@@ -26,7 +27,13 @@ class AmplafiApiClient extends PHPDevelop {
 
     var $errors = array();
 
-    function AmplafiApiClient() {
+    function AmplafiApiClient($amplafi_api_host) {
+        if( isset($amplafi_api_host)) {
+            $this->amplafi_api_uri = $amplafi_api_host;
+        } else {
+            $this->amplafi_api_uri = $this->default_amplafi_api_host;
+        }
+        $this->amplafi_api_uri .='/apiv1/';
     }
 
 function dummy_api_request() {
@@ -34,10 +41,9 @@ function dummy_api_request() {
 }
 
     function send_request($flowTypeName, $request_map) {
-        $apiUri = $this->amplafi_uri . $flowTypeName;
+        $apiUri = $this->amplafi_api_uri . $flowTypeName;
         $response_json = '';
         $this->request = $this->toKeyValue($request_map);
-        $this->myecho("my request=" . $this->request);
         $requestLen = strlen($this->request);
         
         if ( function_exists( 'wp_remote_post' ) ) {
@@ -58,10 +64,15 @@ function dummy_api_request() {
                 $errors[-1] = 'Invalid API URL';
                 return false;
             }
+            if ( isset($parsed['port'])) {
+                $port = $parsed['port'];
+            } else {
+                $port = $parsed['scheme'] == 'ssl' || $parsed['scheme'] == 'https' && extension_loaded('openssl') ? 443 : 80;
+            }
 
             $fp = fsockopen(
                 $parsed['host'],
-                $parsed['scheme'] == 'ssl' || $parsed['scheme'] == 'https' && extension_loaded('openssl') ? 443 : 80,
+                $port,
                 $err_num,
                 $err_str,
                 3);
@@ -83,12 +94,14 @@ function dummy_api_request() {
             $request .= "User-agent: ". $this->user_agent . "\r\n";
             $request .= "Content-Type: ". $this->content_type . "\r\n";
             $request .= 'Content-Length: ' . $requestLen . "\r\n";
-
-            fwrite( $fp, "$request\r\n$this->request" );
+            $request .= "\r\n$this->request";
+            echo "request\n\n" . $request . "\n\n";
+            fwrite( $fp, $request );
 
             $response = '';
-            while ( !feof( $fp ) )
+            while ( !feof( $fp ) ) {
                 $response .= fread( $fp, 4096 );
+            }
             fclose( $fp );
 
             if ( !$response ) {
@@ -119,4 +132,3 @@ function dummy_api_request() {
 }
 
 ?>
-
