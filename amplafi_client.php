@@ -12,12 +12,10 @@ include('php_develop.php');
  */
 class AmplafiApiClient extends PHPDevelop {
   
-  
     var $amplafi_uri = 'http://amplafi.net/apiv1/';
     var $content_type = 'application/json; charset=utf-8';
-    var $flowTypeName;
     var $version = '0.1';
-    var $user_agent = 'AmplafiPhpClient/0.1'; //. $this->version;
+    var $user_agent = 'AmplafiPhpClient/0.1'; //. $version;
     var $admin = 0;
 
     var $request = null;
@@ -28,22 +26,23 @@ class AmplafiApiClient extends PHPDevelop {
 
     var $errors = array();
 
-    function AmplafiApiClient($flowTypeName) {
-        $this->flowTypeName = $flowTypeName;
+    function AmplafiApiClient() {
     }
 
 function dummy_api_request() {
   include('amplafi_socket.php');
 }
 
-    function send_request() {
-      
+    function send_request($flowTypeName, $request_map) {
+        $apiUri = $this->amplafi_uri . $flowTypeName;
         $response_json = '';
-        $request_json = '';
+        $this->request = $this->toKeyValue($request_map);
+        $this->myecho("my request=" . $this->request);
+        $requestLen = strlen($this->request);
         
         if ( function_exists( 'wp_remote_post' ) ) {
-            $response = wp_remote_post( $this->amplafi_uri, array(
-                'headers' => array( 'Content-Type' => $this->content_type, 'Content-Length' => strlen( $this->request ) ),
+            $response = wp_remote_post($apiUri , array(
+                'headers' => array( 'Content-Type' => $this->content_type, 'Content-Length' => $requestLen ),
                 'user-agent' => $this->user_agent,
                 'body' => $this->request
             ) );
@@ -53,7 +52,7 @@ function dummy_api_request() {
             }
             $response_json = wp_remote_retrieve_body( $response );
         } else {
-            $parsed = parse_url( $this->amplafi_url );
+            $parsed = parse_url( $apiUri );
 
             if ( !isset( $parsed['host'] ) && !isset( $parsed['scheme'] ) ) {
                 $errors[-1] = 'Invalid API URL';
@@ -83,7 +82,7 @@ function dummy_api_request() {
             $request .= "Host: {$parsed['host']}\r\n";
             $request .= "User-agent: ". $this->user_agent . "\r\n";
             $request .= "Content-Type: ". $this->content_type . "\r\n";
-            $request .= 'Content-Length: ' . strlen( $request_json ) . "\r\n";
+            $request .= 'Content-Length: ' . $requestLen . "\r\n";
 
             fwrite( $fp, "$request\r\n$this->request" );
 
@@ -100,15 +99,20 @@ function dummy_api_request() {
         }
 
         $this->responses[] = $response_json;
-
+        return "";
+    }
+    function toKeyValue($request_map) {
+        $result = "";
+        for(reset($request_map);current($request_map);next($request_map)){
+            $result .=key($request_map)."=".current($request_map)."\r\n";
+        } 
+        return $result;
     }
     function reset() {
         $this->request = null;
         $this->response = null;
         $this->errors = array();
     }
-
-
 }
 
 ?>
