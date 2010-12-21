@@ -50,5 +50,5 @@ echo $ac->describe('CreateAlert');
 <p>Below Amplafi results...</p>
 
 <?php
-
+$ac->print_phpinfo();
 ?>

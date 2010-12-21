@@ -6,6 +6,9 @@ class PHPDevelop {
       echo $message;
     }
 
+    function print_phpinfo() {
+      phpinfo();
+    }
 }
 
 ?>
