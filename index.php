@@ -23,7 +23,7 @@ require_once('basic_client.php');
 <?php
 
 
-include('fsockopen_test.php');
+//include('fsockopen_test.php');
 
 
 //FB::log('Log message');
@@ -31,6 +31,13 @@ include('fsockopen_test.php');
 $ac = new AmplafiApiClient();
 
 $ac->myecho("<p style=\"color:red;\">From PHPDevelop called from index.php.</p>");
+
+
+$ac->dummy_api_request();
+
+
+// Not working, var out of scope probably.
+//$ac->myecho($ac->$amplafi_uri);
 
 ?>
 
