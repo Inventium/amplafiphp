@@ -14,7 +14,7 @@ class AmplafiApiClient {
     var $content_type = 'application/json; charset=utf-8';
     var $flowTypeName;
     var $version = '0.1';
-    var $user_agent = 'AmplafiPhpClient/'. $this->version;
+    var $user_agent = 'AmplafiPhpClient/0.1'; //. $this->version;
     var $admin = 0;
 
     var $request = null;
