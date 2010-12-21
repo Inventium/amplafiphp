@@ -28,7 +28,7 @@ include('fsockopen_test.php');
 
 //FB::log('Log message');
 
-$ac = new AmplafiApiClient();
+$ac = new AmplafiApiClient('CreateAlert');
 
 $ac->myecho("<p>foo</p>");
 
