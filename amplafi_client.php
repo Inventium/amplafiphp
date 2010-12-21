@@ -32,12 +32,9 @@ class AmplafiApiClient extends PHPDevelop {
         $this->flowTypeName = $flowTypeName;
     }
 
-    
-//    function myecho($message) {
-//      echo $message;
-//    }
-
-
+function dummy_api_request() {
+  include('amplafi_socket.php');
+}
 
     function send_request() {
       
