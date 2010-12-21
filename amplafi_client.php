@@ -4,10 +4,13 @@ if (file_exists('firephp/lib/FirePHP/fb.php')) {
   require_once('firephp/lib/FirePHPCore/FirePHP.class.php'); // (object oriented API)
 }
 
+include('php_develop.php');
+
+
 /**
  * Use http://www.firephp.org/ to help debug
  */
-class AmplafiApiClient {
+class AmplafiApiClient extends PHPDevelop {
   
   
     var $amplafi_uri = 'http://amplafi.net/apiv1/';
@@ -30,9 +33,9 @@ class AmplafiApiClient {
     }
 
     
-    function myecho($message) {
-      echo $message;
-    }
+//    function myecho($message) {
+//      echo $message;
+//    }
 
 
 
