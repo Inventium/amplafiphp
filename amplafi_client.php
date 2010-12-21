@@ -70,8 +70,8 @@ class AmplafiApiClient {
             $request  = "POST $path HTTP/1.0\r\n";
             $request .= "Host: {$parsed['host']}\r\n";
             $request .= "User-agent: ". $this->user_agent . "\r\n";
-            $request .= "Content-Type: ". $content_type . "\r\n";
-            $request .= 'Content-Length: ' . strlen( $this->request_json ) . "\r\n";
+            $request .= "Content-Type: ". $this->content_type . "\r\n";
+            $request .= 'Content-Length: ' . strlen( $request_json ) . "\r\n";
 
             fwrite( $fp, "$request\r\n$this->request" );
 
@@ -84,7 +84,7 @@ class AmplafiApiClient {
                 $errors[-2] = 'No Data';
             }
 
-            list($headers, $this->response_json) = explode( "\r\n\r\n", $response, 2 );
+            list($headers, $response_json) = explode( "\r\n\r\n", $response, 2 );
         }
 
         $this->responses[] = $response_json;
