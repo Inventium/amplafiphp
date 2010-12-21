@@ -29,7 +29,7 @@ if (file_exists('amplafi_client.php')) {
 
 //FB::log('Log message');
 
-$ac = new AmplafiApiClient();
+$ac = new AmplafiApiClient('http://localhost:8080/');
 
 $ac->myecho("<p style=\"color:red;\">From PHPDevelop called from index.php.</p>");
 
@@ -50,5 +50,5 @@ echo $ac->describe('CreateAlert');
 <p>Below Amplafi results...</p>
 
 <?php
-$ac->print_phpinfo();
+//$ac->print_phpinfo();
 ?>
