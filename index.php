@@ -3,8 +3,15 @@
 if (file_exists('firephp/lib/FirePHPCore/FirePHP.class.php')) {
   require_once('firephp/lib/FirePHPCore/FirePHP.class.php'); // (object oriented API)
 
-  echo "firephp";
+  echo "firephp\n";
 }
+
+if (file_exists('amplafi_client.php')) {
+  require_once('amplafi_client.php'); 
+
+  echo "Loaded Amplafi client...\n";
+}
+
 
 require_once('basic_client.php');
 
@@ -18,9 +25,12 @@ require_once('basic_client.php');
 
 include('fsockopen_test.php');
 
+
 //FB::log('Log message');
 
-$bc->write_me();
+$ac = new AmplafiApiClient();
+
+$ac->myecho("<p>foo</p>");
 
 ?>
 
@@ -28,3 +38,6 @@ $bc->write_me();
 
 <p>Below Amplafi results...</p>
 
+<?php
+
+?>

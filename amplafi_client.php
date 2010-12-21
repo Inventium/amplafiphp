@@ -8,10 +8,12 @@ if (file_exists('firephp/lib/FirePHP/fb.php')) {
  * Use http://www.firephp.org/ to help debug
  */
 class AmplafiApiClient {
+  
+  
     var $amplafi_uri = 'http://amplafi.net/';
     var $content_type = 'application/json; charset=utf-8';
     var $version = '0.1';
-    var $user_agent = 'AmplafiPhpClient/'. $version;
+    //var $user_agent = 'AmplafiPhpClient/'. $version;
     var $admin = 0;
 
     var $request = null;
@@ -22,12 +24,21 @@ class AmplafiApiClient {
 
     var $errors = array();
 
-    function AmplafiApiClient( ) {
+    function AmplafiApiClient() {
+       echo "From AmplafiApiClient...";
     }
 
+    
+    function myecho($message) {
+      echo $message;
+    }
+
+
+
     function send_request() {
-        var response_json = '';
-        var request_json = '';
+      
+        $response_json = '';
+        $request_json = '';
         
         if ( function_exists( 'wp_remote_post' ) ) {
             $response = wp_remote_post( $this->amplafi_uri, array(
@@ -95,7 +106,6 @@ class AmplafiApiClient {
         $this->response = null;
         $this->errors = array();
     }
-
 
 
 }
