@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 
 if (file_exists('firephp/lib/FirePHPCore/FirePHP.class.php')) {
@@ -13,7 +14,7 @@ if (file_exists('amplafi_client.php')) {
 }
 
 
-require_once('basic_client.php');
+//require_once('basic_client.php');
 
 
 ?>
@@ -28,12 +29,13 @@ require_once('basic_client.php');
 
 //FB::log('Log message');
 
-$ac = new AmplafiApiClient('CreateAlert');
+$ac = new AmplafiApiClient();
 
 $ac->myecho("<p style=\"color:red;\">From PHPDevelop called from index.php.</p>");
 
 
-$ac->dummy_api_request();
+//$ac->dummy_api_request();
+$ac->send_request('CreateAlert', array('messageBody' => 'a body', 'messageHeadline' => 'a headline' ));
 
 
 // Not working, var out of scope probably.
@@ -41,7 +43,7 @@ $ac->dummy_api_request();
 
 ?>
 
-<script src="https://gist.github.com/737497.js?file=ruby_2d_array.rb"></script>
+//<script src="https://gist.github.com/737497.js?file=ruby_2d_array.rb"></script>
 
 <p>Below Amplafi results...</p>
 
