@@ -99,7 +99,7 @@ function dummy_api_request() {
         }
 
         $this->responses[] = $response_json;
-        return "";
+        return $response_json;
     }
     function toKeyValue($request_map) {
         $result = "";
@@ -107,6 +107,9 @@ function dummy_api_request() {
             $result .=key($request_map)."=".current($request_map)."\r\n";
         } 
         return $result;
+    }
+    function describe($flowTypeName) {
+        return $this->send_request($flowTypeName, array('fsRenderResult' => 'json/describe' ));
     }
     function reset() {
         $this->request = null;
