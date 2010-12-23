@@ -1,6 +1,5 @@
 <?php
 
-//$fp = fsockopen("www.example.com", 80, $errno, $errstr, 30);
 $fp = fsockopen("amplafi.net", 80, $errno, $errstr, 30);
 
 
@@ -18,9 +17,6 @@ if (!$fp) {
     }
     
     echo "\nfoobar";
-
-   $bc = new BasicClient();
-   $bc->write_me();
     
     fclose($fp);
 
